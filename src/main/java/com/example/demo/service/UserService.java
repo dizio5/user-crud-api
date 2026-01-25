@@ -1,12 +1,13 @@
 package com.example.demo.service;
 
+import com.example.demo.dto.CountResponse;
 import com.example.demo.dto.CreateUserRequest;
 import com.example.demo.dto.UserResponse;
 import com.example.demo.dto.mapper.UserMapper;
 import com.example.demo.entity.UserEntity;
 import com.example.demo.repository.UserRepository;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.GetMapping;
+import java.util.List;
 
 @Service
 public class UserService {
@@ -36,11 +37,25 @@ public class UserService {
         return UserMapper.toResponse(user);
     }
 
-    public void getAllUsers() {
-
+    public List<UserResponse> getAllUsers() {
+        return userRepository.findAll()
+                .stream()
+                .map(user -> UserMapper.toResponse(user))
+                .toList();
     }
 
-    public void deleteUser() {
+    public void deleteUser(Long id) {
+        userRepository.deleteById(id);
+    }
 
+    public CountResponse count() {
+        return new CountResponse(userRepository.count());
+    }
+
+    public UserResponse findByMail(String mail) {
+        UserEntity userEntity = userRepository.findByMail(mail)
+                .orElseThrow(() -> new RuntimeException("No existe."));
+
+        return UserMapper.toResponse(userEntity);
     }
 }
