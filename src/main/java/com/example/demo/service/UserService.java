@@ -1,13 +1,15 @@
 package com.example.demo.service;
 
-import com.example.demo.dto.CountResponse;
-import com.example.demo.dto.CreateUserRequest;
-import com.example.demo.dto.UserResponse;
+import com.example.demo.dto.*;
 import com.example.demo.dto.mapper.UserMapper;
 import com.example.demo.entity.UserEntity;
+import com.example.demo.exception.DuplicateMailException;
+import com.example.demo.exception.UserNotFoundException;
 import com.example.demo.repository.UserRepository;
 import org.springframework.stereotype.Service;
 import java.util.List;
+
+import static com.example.demo.dto.mapper.UserMapper.applyUpdate;
 
 @Service
 public class UserService {
@@ -19,11 +21,13 @@ public class UserService {
     }
 
     public UserResponse createUser(CreateUserRequest request) {
+        if (userRepository.existsByMail(request.mail())) {
+            throw new DuplicateMailException(request.mail());
+        }
         // DTO -> Entity
         UserEntity userEntity = UserMapper.toEntity(request);
 
         // Guardar en DB (JPA)
-        // save inserta si id == null, actualiza si id != null
         UserEntity saved = userRepository.save(userEntity);
 
         // Entity -> Response DTO
@@ -32,7 +36,7 @@ public class UserService {
 
     public UserResponse getUserById(Long id) {
         UserEntity user = userRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new UserNotFoundException(id));
 
         return UserMapper.toResponse(user);
     }
@@ -46,6 +50,24 @@ public class UserService {
 
     public void deleteUser(Long id) {
         userRepository.deleteById(id);
+    }
+
+    public UserResponse updateUser(UpdateUserRequest request, Long id) {
+        UserEntity user = userRepository.findById(id)
+                .orElseThrow(() -> new UserNotFoundException(id) );
+
+        applyUpdate(user, request);
+        UserEntity saved = userRepository.save(user);
+        return UserMapper.toResponse(saved);
+    }
+
+    public UserResponse patchUser(PatchUserRequest request, Long id) {
+        UserEntity user = userRepository.findById(id)
+                .orElseThrow(() -> new UserNotFoundException(id));
+
+        UserMapper.applyPatch(user, request);
+        UserEntity saved = userRepository.save(user);
+        return UserMapper.toResponse(saved);
     }
 
     public CountResponse count() {

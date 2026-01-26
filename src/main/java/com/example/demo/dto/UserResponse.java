@@ -2,7 +2,7 @@ package com.example.demo.dto;
 
 import java.time.LocalDateTime;
 
-public record UserResponse(
+public record UserResponse (
         Long id,
         String name,
         String username,

@@ -1,8 +1,6 @@
 package com.example.demo.controller;
 
-import com.example.demo.dto.CountResponse;
-import com.example.demo.dto.CreateUserRequest;
-import com.example.demo.dto.UserResponse;
+import com.example.demo.dto.*;
 import com.example.demo.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -20,15 +18,25 @@ public class UserController {
         this.userService = userService;
     }
 
+    @GetMapping("/{id}")
+    public UserResponse getUserById(@PathVariable Long id) {
+        return userService.getUserById(id);
+    }
+
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public UserResponse create(@Valid @RequestBody CreateUserRequest request) {
+    public UserResponse createUser(@Valid @RequestBody CreateUserRequest request) {
         return userService.createUser(request);
     }
 
-    @GetMapping("/{id}")
-    public UserResponse find(@PathVariable Long id) {
-        return userService.getUserById(id);
+    @PutMapping("/{id}")
+    public UserResponse updateUser(@Valid @RequestBody UpdateUserRequest request, @PathVariable Long id) {
+        return userService.updateUser(request, id);
+    }
+
+    @PatchMapping("/{id}")
+    public UserResponse patchUser(@Valid @RequestBody PatchUserRequest request, @PathVariable Long id) {
+        return userService.patchUser(request, id);
     }
 
     @GetMapping
@@ -50,4 +58,5 @@ public class UserController {
     public UserResponse findByMail(@RequestParam String mail) {
         return userService.findByMail(mail);
     }
+
 }
