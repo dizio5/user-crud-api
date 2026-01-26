@@ -15,3 +15,7 @@ Make sure to install al maven dependencies by using mvn clean install
 Turn on your postgresql database, replace the line "url" in application.yaml to your database url
 Now, send requests to the API, you can use cURL or Postman. Send them to the url: http://localhost:8080/users/
 You will receive responses in JSON format.
+
+![GET](images/get.jpg)
+
+![POST](images/post.jpg)
