@@ -17,7 +17,6 @@ public class UserEntity {
     private Integer age;
     private String mail;
     private String job;
-    private Long companyId;
 
     @Column(nullable = false, updatable = false)
     private LocalDateTime created;
@@ -77,13 +76,5 @@ public class UserEntity {
 
     public void setCreated(LocalDateTime created) {
         this.created = created;
-    }
-
-    public Long getCompanyId() {
-        return this.companyId;
-    }
-
-    public void setCompanyId(Long companyId) {
-        this.companyId = companyId;
     }
 }

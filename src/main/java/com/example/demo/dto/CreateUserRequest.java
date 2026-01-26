@@ -1,6 +1,5 @@
 package com.example.demo.dto;
 
-import com.example.demo.entity.CompanyEntity;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -11,8 +10,7 @@ public record CreateUserRequest (
         String surname,
         @Positive @NotNull Integer age,
         @NotBlank @Email String mail,
-        @NotBlank String job,
-        Long companyId
+        @NotBlank String job
 ) {
 
 }

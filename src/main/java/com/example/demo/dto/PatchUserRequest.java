@@ -11,7 +11,6 @@ public record PatchUserRequest (
         String surname,
         @Positive Integer age,
         String mail,
-        String job,
-        @Column(name = "company_id") Long companyId
+        String job
 ){
 }

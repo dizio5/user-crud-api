@@ -6,8 +6,6 @@ import com.example.demo.dto.UpdateUserRequest;
 import com.example.demo.dto.UserResponse;
 import com.example.demo.entity.UserEntity;
 
-import java.time.LocalDateTime;
-
 public class UserMapper {
 
     private UserMapper() {
@@ -51,6 +49,5 @@ public class UserMapper {
         if (request.age() != null) userEntity.setAge(request.age());
         if (request.mail() != null) userEntity.setMail(request.mail());
         if (request.job() != null) userEntity.setJob(request.job());
-        if (request.companyId() != null) userEntity.setCompanyId(request.companyId());
     }
 }

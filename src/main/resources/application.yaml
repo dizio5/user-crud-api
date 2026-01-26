@@ -3,8 +3,8 @@ spring:
     name: demo
   datasource:
     url: jdbc:postgresql://localhost:5432/prueba
-    username: ${DB_USERNAME}
-    password: ${DB_PASSWORD}
+    username: facundo
+    password: 152233
     driver-class-name: org.postgresql.Driver
 
   jpa:
