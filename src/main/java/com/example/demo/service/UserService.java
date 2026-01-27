@@ -21,16 +21,10 @@ public class UserService {
     }
 
     public UserResponse createUser(CreateUserRequest request) {
-        if (userRepository.existsByMail(request.mail())) {
-            throw new DuplicateMailException(request.mail());
-        }
-        // DTO -> Entity
+        if (userRepository.existsByMail(request.mail())) throw new DuplicateMailException(request.mail());
+
         UserEntity userEntity = UserMapper.toEntity(request);
-
-        // Guardar en DB (JPA)
         UserEntity saved = userRepository.save(userEntity);
-
-        // Entity -> Response DTO
         return UserMapper.toResponse(saved);
     }
 
@@ -44,7 +38,7 @@ public class UserService {
     public List<UserResponse> getAllUsers() {
         return userRepository.findAll()
                 .stream()
-                .map(user -> UserMapper.toResponse(user))
+                .map(UserMapper::toResponse)
                 .toList();
     }
 
