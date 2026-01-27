@@ -1,7 +1,7 @@
 # Users CRUD Application using Spring Boot
 
 This project consists of an API implementation using REST principles. It also involves CRUD methods to modify users data through PostgreSQL database.
-To run properly this project, you need to install maven and PostgreSQL. Run a local hosted database and add credentials to venv. Otherwise, you can hard-code them on properties.yaml (not recommended).
+To run properly this project, you need to install maven and PostgreSQL. Run a local hosted database and add credentials to venv. Otherwise, you can hard-code them on properties.yaml (Not recommended).
 
 Future features:
 - JWT implementation
