@@ -12,8 +12,11 @@ Future features:
 
 ## How to use:
 Make sure to install al maven dependencies by using mvn clean install
-Turn on your postgresql database, replace the line "url" in application.yaml to your database url
+
+Turn on your PostgreSQL database. Set environment variables for DB_URL, DB_NAME, and DB_PASSWORD in IntelliJ Idea
+
 Now, send requests to the API, you can use cURL or Postman. Send them to the url: http://localhost:8080/users/
+
 You will receive responses in JSON format.
 
 ![GET](images/get.jpg)
