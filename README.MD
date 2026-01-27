@@ -11,7 +11,7 @@ Future features:
 ## How to use:
 Make sure to install al maven dependencies by using mvn clean install
 
-Turn on your PostgreSQL database. Set environment variables in IntelliJ IDEA for DB_NAME, DB_NAME, and DB_PASSWORD of your choice.
+Turn on your PostgreSQL database. Set environment variables in IntelliJ IDEA for DB_NAME, DB_USERNAME, and DB_PASSWORD of your choice.
 
 Now, send requests to the API, you can use cURL or Postman. Send them to the url: http://localhost:8080/users/
 
