@@ -1,4 +1,4 @@
-package com.example.demo.config;
+package com.example.demo.service;
 
 import com.example.demo.dto.CreateUserRequest;
 import com.example.demo.dto.PatchUserRequest;
@@ -8,7 +8,6 @@ import com.example.demo.entity.UserEntity;
 import com.example.demo.exception.DuplicateMailException;
 import com.example.demo.exception.UserNotFoundException;
 import com.example.demo.repository.UserRepository;
-import com.example.demo.service.UserService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
