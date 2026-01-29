@@ -4,7 +4,7 @@ import com.example.demo.dto.CreateUserRequest;
 import com.example.demo.dto.PatchUserRequest;
 import com.example.demo.dto.UpdateUserRequest;
 import com.example.demo.dto.UserResponse;
-import com.example.demo.entity.UserEntity;
+import com.example.demo.entity.User;
 
 public class UserMapper {
 
@@ -12,42 +12,42 @@ public class UserMapper {
 
     }
 
-    public static UserResponse toResponse(UserEntity userEntity) {
+    public static UserResponse toResponse(User user) {
         return new UserResponse(
-                userEntity.getId(),
-                userEntity.getName(),
-                userEntity.getSurname(),
-                userEntity.getAge(),
-                userEntity.getMail(),
-                userEntity.getJob(),
-                userEntity.getCreated()
+                user.getId(),
+                user.getName(),
+                user.getSurname(),
+                user.getAge(),
+                user.getMail(),
+                user.getJob(),
+                user.getCreated()
         );
     }
 
-    public static UserEntity toEntity(CreateUserRequest createUserRequest) {
-        UserEntity userEntity = new UserEntity();
-        userEntity.setName(createUserRequest.name());
-        userEntity.setSurname(createUserRequest.surname());
-        userEntity.setAge(createUserRequest.age());
-        userEntity.setMail(createUserRequest.mail());
-        userEntity.setJob(createUserRequest.job());
+    public static User toEntity(CreateUserRequest createUserRequest) {
+        User user = new User();
+        user.setName(createUserRequest.name());
+        user.setSurname(createUserRequest.surname());
+        user.setAge(createUserRequest.age());
+        user.setMail(createUserRequest.mail());
+        user.setJob(createUserRequest.job());
 
-        return userEntity;
+        return user;
     }
 
-    public static void applyUpdate(UserEntity userEntity, UpdateUserRequest request) {
-        userEntity.setName(request.name());
-        userEntity.setSurname(request.surname());
-        userEntity.setAge(request.age());
-        userEntity.setMail(request.mail());
-        userEntity.setJob(request.job());
+    public static void applyUpdate(User user, UpdateUserRequest request) {
+        user.setName(request.name());
+        user.setSurname(request.surname());
+        user.setAge(request.age());
+        user.setMail(request.mail());
+        user.setJob(request.job());
     }
 
-    public static void applyPatch(UserEntity userEntity, PatchUserRequest request) {
-        if (request.name() != null) userEntity.setName(request.name());
-        if (request.surname() != null) userEntity.setSurname(request.surname());
-        if (request.age() != null) userEntity.setAge(request.age());
-        if (request.mail() != null) userEntity.setMail(request.mail());
-        if (request.job() != null) userEntity.setJob(request.job());
+    public static void applyPatch(User user, PatchUserRequest request) {
+        if (request.name() != null) user.setName(request.name());
+        if (request.surname() != null) user.setSurname(request.surname());
+        if (request.age() != null) user.setAge(request.age());
+        if (request.mail() != null) user.setMail(request.mail());
+        if (request.job() != null) user.setJob(request.job());
     }
 }

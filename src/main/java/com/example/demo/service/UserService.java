@@ -2,7 +2,7 @@ package com.example.demo.service;
 
 import com.example.demo.dto.*;
 import com.example.demo.dto.mapper.UserMapper;
-import com.example.demo.entity.UserEntity;
+import com.example.demo.entity.User;
 import com.example.demo.exception.DuplicateMailException;
 import com.example.demo.exception.UserNotFoundException;
 import com.example.demo.repository.UserRepository;
@@ -23,13 +23,13 @@ public class UserService {
     public UserResponse createUser(CreateUserRequest request) {
         if (userRepository.existsByMail(request.mail())) throw new DuplicateMailException(request.mail());
 
-        UserEntity userEntity = UserMapper.toEntity(request);
-        UserEntity saved = userRepository.save(userEntity);
+        User user = UserMapper.toEntity(request);
+        User saved = userRepository.save(user);
         return UserMapper.toResponse(saved);
     }
 
     public UserResponse getUserById(Long id) {
-        UserEntity user = userRepository.findById(id)
+        User user = userRepository.findById(id)
                 .orElseThrow(() -> new UserNotFoundException(id));
 
         return UserMapper.toResponse(user);
@@ -47,20 +47,20 @@ public class UserService {
     }
 
     public UserResponse updateUser(UpdateUserRequest request, Long id) {
-        UserEntity user = userRepository.findById(id)
+        User user = userRepository.findById(id)
                 .orElseThrow(() -> new UserNotFoundException(id) );
 
         applyUpdate(user, request);
-        UserEntity saved = userRepository.save(user);
+        User saved = userRepository.save(user);
         return UserMapper.toResponse(saved);
     }
 
     public UserResponse patchUser(PatchUserRequest request, Long id) {
-        UserEntity user = userRepository.findById(id)
+        User user = userRepository.findById(id)
                 .orElseThrow(() -> new UserNotFoundException(id));
 
         UserMapper.applyPatch(user, request);
-        UserEntity saved = userRepository.save(user);
+        User saved = userRepository.save(user);
         return UserMapper.toResponse(saved);
     }
 
@@ -69,9 +69,9 @@ public class UserService {
     }
 
     public UserResponse findByMail(String mail) {
-        UserEntity userEntity = userRepository.findByMail(mail)
+        User user = userRepository.findByMail(mail)
                 .orElseThrow(() -> new RuntimeException("No existe."));
 
-        return UserMapper.toResponse(userEntity);
+        return UserMapper.toResponse(user);
     }
 }
