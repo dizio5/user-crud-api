@@ -1,10 +1,10 @@
-package com.example.demo.dto.mapper;
+package com.example.demo.user.dto.mapper;
 
-import com.example.demo.dto.CreateUserRequest;
-import com.example.demo.dto.PatchUserRequest;
-import com.example.demo.dto.UpdateUserRequest;
-import com.example.demo.dto.UserResponse;
-import com.example.demo.entity.User;
+import com.example.demo.user.dto.CreateUserRequest;
+import com.example.demo.user.dto.PatchUserRequest;
+import com.example.demo.user.dto.UpdateUserRequest;
+import com.example.demo.user.dto.UserResponse;
+import com.example.demo.user.entity.User;
 
 public class UserMapper {
 

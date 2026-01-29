@@ -1,13 +1,12 @@
-package com.example.demo.service;
+package com.example.demo.user;
 
-import com.example.demo.dto.CreateUserRequest;
-import com.example.demo.dto.PatchUserRequest;
-import com.example.demo.dto.UpdateUserRequest;
-import com.example.demo.dto.UserResponse;
-import com.example.demo.entity.User;
-import com.example.demo.exception.DuplicateMailException;
-import com.example.demo.exception.UserNotFoundException;
-import com.example.demo.repository.UserRepository;
+import com.example.demo.user.dto.CreateUserRequest;
+import com.example.demo.user.dto.PatchUserRequest;
+import com.example.demo.user.dto.UpdateUserRequest;
+import com.example.demo.user.dto.UserResponse;
+import com.example.demo.user.entity.User;
+import com.example.demo.user.exception.DuplicateMailException;
+import com.example.demo.user.exception.UserNotFoundException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

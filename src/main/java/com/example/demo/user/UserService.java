@@ -1,15 +1,14 @@
-package com.example.demo.service;
+package com.example.demo.user;
 
-import com.example.demo.dto.*;
-import com.example.demo.dto.mapper.UserMapper;
-import com.example.demo.entity.User;
-import com.example.demo.exception.DuplicateMailException;
-import com.example.demo.exception.UserNotFoundException;
-import com.example.demo.repository.UserRepository;
+import com.example.demo.user.dto.*;
+import com.example.demo.user.dto.mapper.UserMapper;
+import com.example.demo.user.entity.User;
+import com.example.demo.user.exception.DuplicateMailException;
+import com.example.demo.user.exception.UserNotFoundException;
 import org.springframework.stereotype.Service;
 import java.util.List;
 
-import static com.example.demo.dto.mapper.UserMapper.applyUpdate;
+import static com.example.demo.user.dto.mapper.UserMapper.applyUpdate;
 
 @Service
 public class UserService {
