@@ -1,13 +1,12 @@
-package com.example.demo.service;
+package com.example.demo.user;
 
-import com.example.demo.dto.CreateUserRequest;
-import com.example.demo.dto.PatchUserRequest;
-import com.example.demo.dto.UpdateUserRequest;
-import com.example.demo.dto.UserResponse;
-import com.example.demo.entity.UserEntity;
-import com.example.demo.exception.DuplicateMailException;
-import com.example.demo.exception.UserNotFoundException;
-import com.example.demo.repository.UserRepository;
+import com.example.demo.user.dto.CreateUserRequest;
+import com.example.demo.user.dto.PatchUserRequest;
+import com.example.demo.user.dto.UpdateUserRequest;
+import com.example.demo.user.dto.UserResponse;
+import com.example.demo.user.entity.User;
+import com.example.demo.user.exception.DuplicateMailException;
+import com.example.demo.user.exception.UserNotFoundException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -76,7 +75,7 @@ public class UserServiceTest {
                 "facundo.avila.dev@gmail.com", "Student"
         );
 
-        UserEntity user = new UserEntity();
+        User user = new User();
         user.setName("John");
         user.setSurname("Doe");
         user.setAge(40);
@@ -86,7 +85,7 @@ public class UserServiceTest {
         when(userRepository.findById(id))
                 .thenReturn(Optional.of(user));
 
-        when(userRepository.save(any(UserEntity.class)))
+        when(userRepository.save(any(User.class)))
                 .thenAnswer(inv -> inv.getArgument(0)); // devuelve el mismo user mutado
 
         userService.updateUser(request, id);
@@ -127,7 +126,7 @@ public class UserServiceTest {
                 "John", null, 40, null, null
         );
 
-        UserEntity user = new UserEntity();
+        User user = new User();
         user.setName("Facundo");
         user.setSurname("Avila");
         user.setAge(22);
@@ -135,7 +134,7 @@ public class UserServiceTest {
         user.setJob("Student");
 
         when(userRepository.findById(id)).thenReturn(Optional.of(user));
-        when(userRepository.save(any(UserEntity.class)))
+        when(userRepository.save(any(User.class)))
                 .thenAnswer(inv -> inv.getArgument(0));
 
         userService.patchUser(request, id);

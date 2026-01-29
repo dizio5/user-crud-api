@@ -1,7 +1,6 @@
-package com.example.demo.controller;
+package com.example.demo.user;
 
-import com.example.demo.dto.*;
-import com.example.demo.service.UserService;
+import com.example.demo.user.dto.*;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
