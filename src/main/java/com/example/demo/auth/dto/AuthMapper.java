@@ -18,9 +18,9 @@ public class AuthMapper {
         return user;
     }
 
-    public static RegisterResponse toResponse(User user) {
-        return new RegisterResponse(
-                user.getName(), user.getMail()
+    public static AuthResponse toResponse(String token) {
+        return new AuthResponse(
+                token, "Bearer", 900
         );
     }
 }

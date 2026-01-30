@@ -11,3 +11,22 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update
+
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: ${ID_GOOGLE}
+            client-secret: ${SECRET_GOOGLE}
+            scope: openid, profile, email
+          github:
+            client-id: ${ID_GITHUB}
+            client-secret: ${SECRET_GITHUB}
+            scope: read:user, user:email
+
+security:
+  jwt:
+    issuer: localhost
+    secret: ${SECRET_JWT}
+    expiration-ms: 3600000
