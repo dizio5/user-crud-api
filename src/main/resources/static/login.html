@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Login</title>
+  <style>
+    body { font-family: system-ui, -apple-system, Arial, sans-serif; padding: 24px; }
+    .card { max-width: 420px; margin: 0 auto; border: 1px solid #ccc; border-radius: 10px; padding: 18px; }
+    h1 { margin: 0 0 12px 0; font-size: 22px; }
+    label { display:block; margin: 10px 0 6px; }
+    input { width: 100%; padding: 10px; border: 1px solid #bbb; border-radius: 8px; }
+    button { margin-top: 14px; padding: 10px 12px; border-radius: 8px; border: 1px solid #888; cursor: pointer; }
+    .row { display:flex; gap: 10px; align-items:center; margin-top: 12px; }
+    .msg { margin-top: 12px; padding: 10px; border-radius: 8px; display:none; }
+    .msg.ok { display:block; border: 1px solid #6c6; background: #efe; }
+    .msg.err { display:block; border: 1px solid #c66; background: #fee; }
+    a { text-decoration: none; }
+  </style>
+</head>
+<body>
+<div class="card">
+  <h1>Login</h1>
+
+  <form id="loginForm">
+    <label for="name">Nombre</label>
+    <input id="name" name="name" autocomplete="username" required />
+
+    <label for="password">Contraseña</label>
+    <input id="password" name="password" type="password" autocomplete="current-password" required />
+
+    <button type="submit">Entrar</button>
+  </form>
+
+  <div id="message" class="msg"></div>
+
+  <div class="row">
+    <span>¿No tenés cuenta?</span>
+    <a href="register.html">Registrate</a>
+  </div>
+</div>
+
+<script>
+  const API_BASE = "http://localhost:8080";
+
+  const form = document.getElementById("loginForm");
+  const msg = document.getElementById("message");
+
+  function showMessage(text, ok) {
+    msg.textContent = text;
+    msg.className = "msg " + (ok ? "ok" : "err");
+  }
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const name = document.getElementById("name").value.trim();
+    const password = document.getElementById("password").value;
+
+    try {
+      const res = await fetch(`${API_BASE}/auth/login`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, password })
+      });
+
+      if (!res.ok) {
+        const text = await res.text();
+        showMessage(`Login falló (${res.status}): ${text || "Credenciales inválidas"}`, false);
+        return;
+      }
+
+      // 👉 Ajustá esto si tu backend devuelve el token con otro nombre
+      const data = await res.json();
+      const token = data.token;
+
+      if (!token) {
+        showMessage("Login OK, pero no vino token en la respuesta. Revisá el JSON.", false);
+        return;
+      }
+
+      localStorage.setItem("jwt", token);
+      showMessage("Login exitoso. Redirigiendo...", true);
+
+      // Te mando a una página que llama /users con el JWT
+      setTimeout(() => window.location.href = "users.html", 600);
+
+    } catch (err) {
+      showMessage("Error de red: no se pudo conectar al backend.", false);
+    }
+  });
+</script>
+</body>
+</html>

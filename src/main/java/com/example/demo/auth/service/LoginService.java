@@ -28,7 +28,7 @@ public class LoginService {
 
     public AuthResponse login(LoginRequest request) {
         Authentication auth = authManager.authenticate(
-                new UsernamePasswordAuthenticationToken(request.name(), request.password())
+                new UsernamePasswordAuthenticationToken(request.mail(), request.password())
         );
 
         Instant now = Instant.now();

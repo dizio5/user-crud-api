@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Users</title>
+    <style>
+      body {
+        font-family:
+          system-ui,
+          -apple-system,
+          Arial,
+          sans-serif;
+        padding: 24px;
+      }
+      .top {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 16px;
+      }
+      button {
+        padding: 8px 12px;
+        border-radius: 8px;
+        border: 1px solid #888;
+        cursor: pointer;
+      }
+      pre {
+        border: 1px solid #ccc;
+        border-radius: 10px;
+        padding: 12px;
+        overflow: auto;
+      }
+      .err {
+        border: 1px solid #c66;
+        background: #fee;
+        padding: 10px;
+        border-radius: 8px;
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="top">
+      <h1 style="margin: 0">Usuarios</h1>
+      <div>
+        <button id="refreshBtn">Refrescar</button>
+        <button id="logoutBtn">Logout</button>
+      </div>
+    </div>
+
+    <div id="err" class="err"></div>
+    <pre id="out">Cargando...</pre>
+
+    <script>
+      const API_BASE = "http://localhost:8080";
+
+      const out = document.getElementById("out");
+      const errBox = document.getElementById("err");
+
+      function showError(text) {
+        errBox.textContent = text;
+        errBox.style.display = "block";
+      }
+
+      function clearError() {
+        errBox.textContent = "";
+        errBox.style.display = "none";
+      }
+
+      function getToken() {
+        return localStorage.getItem("jwt");
+      }
+
+      async function loadUsers() {
+        clearError();
+
+        const token = getToken();
+        if (!token) {
+          // si no hay token, volvemos a login
+          window.location.href = "login.html";
+          return;
+        }
+
+        try {
+          const res = await fetch(`${API_BASE}/users`, {
+            method: "GET",
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
+
+          if (!res.ok) {
+            const text = await res.text();
+            showError(
+              `Error (${res.status}): ${text || "No se pudo obtener /users"}`,
+            );
+
+            // Si el token expiró o es inválido, te mando al login
+            if (res.status === 401 || res.status === 403) {
+              localStorage.removeItem("jwt");
+              setTimeout(() => (window.location.href = "login.html"), 900);
+            }
+            return;
+          }
+
+          const data = await res.json();
+          out.textContent = JSON.stringify(data, null, 2);
+        } catch (e) {
+          showError("Error de red: no se pudo conectar al backend.");
+        }
+      }
+
+      document
+        .getElementById("refreshBtn")
+        .addEventListener("click", loadUsers);
+
+      document.getElementById("logoutBtn").addEventListener("click", () => {
+        localStorage.removeItem("jwt");
+        window.location.href = "login.html";
+      });
+
+      loadUsers();
+    </script>
+  </body>
+</html>
